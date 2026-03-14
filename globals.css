@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg:      #0A0A0A;
+  --surface: #121212;
+  --card:    #181818;
+  --border:  #2A2A2A;
+  --text:    #EAEAEA;
+  --muted:   #A0A0A0;
+  --green:   #1ED760;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  height: 100%;
+}
+
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: var(--surface); }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 2px; }
+
+::placeholder { color: #3A3A3A !important; }
+
+/* Monaco editor container */
+.monaco-editor { border-radius: 0 !important; }
+
+/* Smooth page transitions */
+main { animation: fadeIn 0.15s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* File tree hover */
+.file-node:hover { background: #1A1A1A; }
+.file-node.active { background: #1ED76012; border-left: 2px solid #1ED760; color: #1ED760; }
