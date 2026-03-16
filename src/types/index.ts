@@ -10,12 +10,24 @@ export interface Project {
   techStack: string[];
   banner?: string;
   featured: boolean;
+  pinned: boolean;
   status: "active" | "completed" | "research";
   liveUrl?: string;
+  demoUrl?: string;
+  videoUrl?: string;
   order: number;
   views: number;
+  likes: number;
   architectureUrl?: string;
   architectureDiagram?: string;
+  githubStars: number;
+  githubForks: number;
+  githubLanguage?: string;
+  githubUpdatedAt?: string;
+  openIssues: number;
+  license?: string;
+  topics: string[];
+  color?: string;
   createdAt: string;
   updatedAt: string;
 }
