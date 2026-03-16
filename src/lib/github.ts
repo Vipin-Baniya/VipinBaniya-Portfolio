@@ -100,19 +100,26 @@ export async function getRecentCommits(
 export async function getRepoInfo(owner: string, repo: string) {
   const res = await fetch(
     `${GITHUB_API}/repos/${owner}/${repo}`,
-    { headers, next: { revalidate: 600 } }
+    { headers, next: { revalidate: 300 } }
   );
 
   if (!res.ok) return null;
 
   const d = await res.json();
   return {
-    stars: d.stargazers_count,
-    forks: d.forks_count,
-    language: d.language,
-    updatedAt: d.updated_at,
-    description: d.description,
-    defaultBranch: d.default_branch,
+    stars:          d.stargazers_count   || 0,
+    forks:          d.forks_count        || 0,
+    language:       d.language           || "",
+    updatedAt:      d.updated_at         || "",
+    description:    d.description        || "",
+    defaultBranch:  d.default_branch     || "main",
+    openIssues:     d.open_issues_count  || 0,
+    license:        d.license?.spdx_id  || "",
+    homepage:       d.homepage           || "",
+    size:           d.size               || 0,
+    watchers:       d.watchers_count     || 0,
+    archived:       d.archived           || false,
+    visibility:     d.visibility         || "public",
   };
 }
 
@@ -194,4 +201,78 @@ export function detectLanguage(filename: string): string {
   if (lower === "makefile") return "makefile";
   const ext = lower.split(".").pop() || "";
   return LANG_MAP[ext] || "plaintext";
+}
+
+// ─── FETCH REPO TOPICS / FULL METADATA ────────────────────────────────────────
+
+export async function getRepoTopics(owner: string, repo: string): Promise<string[]> {
+  try {
+    const res = await fetch(
+      `${GITHUB_API}/repos/${owner}/${repo}/topics`,
+      { headers: { ...headers, Accept: "application/vnd.github.mercy-preview+json" } }
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.names || [];
+  } catch { return []; }
+}
+
+export async function getRepoIssues(owner: string, repo: string): Promise<number> {
+  try {
+    const res = await fetch(
+      `${GITHUB_API}/repos/${owner}/${repo}/issues?state=open&per_page=1`,
+      { headers }
+    );
+    if (!res.ok) return 0;
+    const link = res.headers.get("link") || "";
+    const match = link.match(/page=(\d+)>; rel="last"/);
+    return match ? parseInt(match[1]) : (await res.json()).length;
+  } catch { return 0; }
+}
+
+export async function getRepoBranches(owner: string, repo: string): Promise<string[]> {
+  try {
+    const res = await fetch(
+      `${GITHUB_API}/repos/${owner}/${repo}/branches?per_page=30`,
+      { headers }
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data.map((b: any) => b.name) : [];
+  } catch { return []; }
+}
+
+export async function getRepoReleases(owner: string, repo: string): Promise<any[]> {
+  try {
+    const res = await fetch(
+      `${GITHUB_API}/repos/${owner}/${repo}/releases?per_page=5`,
+      { headers }
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data.map((r: any) => ({
+      tag: r.tag_name,
+      name: r.name,
+      published: r.published_at,
+      url: r.html_url,
+      prerelease: r.prerelease,
+    })) : [];
+  } catch { return []; }
+}
+
+export async function getContributors(owner: string, repo: string): Promise<any[]> {
+  try {
+    const res = await fetch(
+      `${GITHUB_API}/repos/${owner}/${repo}/contributors?per_page=10`,
+      { headers }
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data.map((c: any) => ({
+      login: c.login,
+      avatar: c.avatar_url,
+      contributions: c.contributions,
+      url: c.html_url,
+    })) : [];
+  } catch { return []; }
 }
