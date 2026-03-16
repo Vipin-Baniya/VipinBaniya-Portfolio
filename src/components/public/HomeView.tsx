@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Project, Achievement, Certificate, Skill } from "@/types";
-import { Trophy, Award, ArrowRight, Cpu } from "lucide-react";
+import { Trophy, Award, ArrowRight, Cpu, TrendingUp, Star, Eye, Play } from "lucide-react";
 import { usePlayer } from "@/components/ui/PlayerContext";
 
 function greeting() {
@@ -161,6 +161,54 @@ export default function HomeView() {
 
       {/* Testimonials preview — renders only if data exists */}
       <TestimonialsPreview />
+
+      {/* Top Charts — Spotify-style trending */}
+      {projects.length > 0 && (
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <TrendingUp size={16} className="text-green" />
+              <h2 className="text-xl font-bold text-text">Top Charts</h2>
+            </div>
+            <Link href="/projects" className="text-xs text-muted hover:text-green font-mono flex items-center gap-1 transition-colors">
+              See all <ArrowRight size={12} />
+            </Link>
+          </div>
+          <div className="bg-card border border-border rounded-2xl overflow-hidden">
+            {[...projects]
+              .sort((a, b) => ((b.views || 0) + (b.githubStars || 0) * 3) - ((a.views || 0) + (a.githubStars || 0) * 3))
+              .slice(0, 5)
+              .map((p, i) => (
+                <Link key={p._id} href={`/projects/${p.slug}`} onClick={() => setProject(p)}>
+                  <div className="flex items-center gap-4 px-5 py-3 hover:bg-surface transition-colors border-b border-border last:border-0 group">
+                    <span className={`font-black text-sm w-5 text-right flex-shrink-0 ${i === 0 ? "text-green" : "text-dim"}`}>{i + 1}</span>
+                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-surface border border-border">
+                      {p.banner
+                        ? <img src={p.banner} alt={p.title} className="w-full h-full object-cover" />
+                        : <div className="w-full h-full flex items-center justify-center font-mono text-dim text-xs">{"{}"}</div>
+                      }
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-text text-sm truncate group-hover:text-green transition-colors">{p.title}</p>
+                      <p className="text-dim text-xs font-mono">{p.techStack.slice(0, 2).join(" · ")}</p>
+                    </div>
+                    <div className="flex items-center gap-3 flex-shrink-0 text-dim text-[11px] font-mono">
+                      {(p.githubStars || 0) > 0 && (
+                        <span className="flex items-center gap-1"><Star size={10} className="text-yellow-400" />{p.githubStars}</span>
+                      )}
+                      {(p.views || 0) > 0 && (
+                        <span className="flex items-center gap-1"><Eye size={10} />{p.views}</span>
+                      )}
+                      <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-green hover:border-green hover:text-bg">
+                        <Play size={11} fill="currentColor" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
