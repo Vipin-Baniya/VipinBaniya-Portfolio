@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Project } from "@/types";
-import { Plus, Pencil, Trash2, Star, Github, ExternalLink, Eye } from "lucide-react";
+import { Plus, Pencil, Trash2, Star, Github, ExternalLink, Eye, RefreshCw } from "lucide-react";
 import { Field, Input, Textarea, Select, Toggle, TagInput, FormActions } from "@/components/admin/FormFields";
 
 const EMPTY: Partial<Project> = {
   title: "", slug: "", description: "", longDescription: "",
   githubOwner: "", githubRepo: "", branch: "main",
-  techStack: [], banner: "", liveUrl: "",
+  techStack: [], banner: "", liveUrl: "", demoUrl: "", videoUrl: "",
   architectureUrl: "", architectureDiagram: "",
-  featured: false, status: "active",
+  featured: false, pinned: false, status: "active", color: "",
 };
 
 export default function AdminProjectsPage() {
@@ -27,6 +27,15 @@ export default function AdminProjectsPage() {
 
   function set(key: keyof Project, value: unknown) {
     setForm(f => ({ ...f, [key]: value }));
+  }
+
+  async function syncProject(id: string) {
+    await fetch("/api/projects/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    load();
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -130,11 +139,26 @@ export default function AdminProjectsPage() {
           </Field>
 
           <div className="grid grid-cols-2 gap-4">
+            <Field label="Demo URL" hint="Separate demo link (overrides Live URL in player bar)">
+              <Input value={form.demoUrl || ""} onChange={v => set("demoUrl", v)} placeholder="https://demo.example.com" />
+            </Field>
+            <Field label="Demo Video URL" hint="YouTube or Vimeo link">
+              <Input value={form.videoUrl || ""} onChange={v => set("videoUrl", v)} placeholder="https://youtube.com/watch?v=..." />
+            </Field>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
             <Field label="Architecture Image URL" hint="System diagram image (optional)">
               <Input value={form.architectureUrl || ""} onChange={v => set("architectureUrl", v)} placeholder="https://..." />
             </Field>
             <Field label="Architecture Description" hint="Mermaid code or plain text system description">
               <Input value={form.architectureDiagram || ""} onChange={v => set("architectureDiagram", v)} placeholder="Frontend → API → MongoDB..." />
+            </Field>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Card Accent Color" hint="Hex color for card border accent (optional)">
+              <Input value={form.color || ""} onChange={v => set("color", v)} placeholder="#1ED760" />
             </Field>
           </div>
 
@@ -146,8 +170,9 @@ export default function AdminProjectsPage() {
                 { value: "research", label: "Research" },
               ]} />
             </Field>
-            <div className="flex items-end pb-2">
+            <div className="flex items-end pb-2 gap-4">
               <Toggle label="Featured" value={form.featured || false} onChange={v => set("featured", v)} />
+              <Toggle label="Pinned" value={(form as any).pinned || false} onChange={v => (set as any)("pinned", v)} />
             </div>
           </div>
 
