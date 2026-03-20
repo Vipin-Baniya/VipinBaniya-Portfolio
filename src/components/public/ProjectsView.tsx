@@ -176,9 +176,17 @@ export default function ProjectsView() {
               <motion.div key={p._id}
                 variants={cardVariant}
                 className={`group relative bg-card border border-border rounded-2xl overflow-hidden
-                  transition-colors duration-200 cursor-pointer
+                  cursor-pointer
                   ${isHovered ? "border-green/40" : ""}`}
                 style={{ ...(p.color ? { borderColor: `${p.color}30` } : {}) }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: p.color
+                    ? `0 20px 60px ${p.color}22`
+                    : "0 20px 60px rgba(29,185,84,0.12)",
+                  transition: { duration: 0.2 },
+                }}
+                whileTap={{ scale: 0.98 }}
                 onMouseEnter={() => setHoveredId(p._id)}
                 onMouseLeave={() => setHoveredId(null)}
               >

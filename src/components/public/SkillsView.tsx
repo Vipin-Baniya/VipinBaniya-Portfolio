@@ -184,7 +184,14 @@ export default function SkillsView() {
                     <motion.div
                       key={skill._id}
                       variants={cardVariant}
-                      className="card-hover bg-card border border-border rounded-xl p-3 hover:border-green/30 group"
+                      className="bg-card border border-border rounded-xl p-3 group"
+                      whileHover={{
+                        y: -3,
+                        borderColor: "rgba(29,185,84,0.35)",
+                        boxShadow: "0 12px 40px rgba(29,185,84,0.10)",
+                        transition: { duration: 0.18 },
+                      }}
+                      whileTap={{ scale: 0.96 }}
                     >
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2 min-w-0">

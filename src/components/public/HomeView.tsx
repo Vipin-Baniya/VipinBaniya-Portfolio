@@ -195,7 +195,12 @@ export default function HomeView() {
           ) : (
             <div className="space-y-3">
               {achievements.map(a => (
-                <div key={a._id} className="card-hover bg-card border border-border rounded-xl p-4 flex gap-3 hover:border-yellow-500/30">
+                <motion.div
+                  key={a._id}
+                  className="bg-card border border-border rounded-xl p-4 flex gap-3"
+                  whileHover={{ y: -2, borderColor: "rgba(234,179,8,0.3)", boxShadow: "0 8px 30px rgba(234,179,8,0.08)", transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.98 }}
+                >
                   <div className="w-9 h-9 rounded-lg bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
                     <Trophy size={16} className="text-yellow-400" />
                   </div>
@@ -203,7 +208,7 @@ export default function HomeView() {
                     <p className="font-semibold text-text text-sm truncate">{a.title}</p>
                     <p className="text-muted text-xs">{a.organization}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
@@ -222,7 +227,12 @@ export default function HomeView() {
           ) : (
             <div className="space-y-3">
               {certs.map(c => (
-                <div key={c._id} className="card-hover bg-card border border-border rounded-xl p-4 flex gap-3 hover:border-green/30">
+                <motion.div
+                  key={c._id}
+                  className="bg-card border border-border rounded-xl p-4 flex gap-3"
+                  whileHover={{ y: -2, borderColor: "rgba(29,185,84,0.3)", boxShadow: "0 8px 30px rgba(29,185,84,0.08)", transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.98 }}
+                >
                   <div className="w-9 h-9 rounded-lg bg-green/10 flex items-center justify-center flex-shrink-0">
                     <Award size={16} className="text-green" />
                   </div>
@@ -230,7 +240,7 @@ export default function HomeView() {
                     <p className="font-semibold text-text text-sm truncate">{c.title}</p>
                     <p className="text-muted text-xs">{c.issuer}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
@@ -313,7 +323,12 @@ function TestimonialsPreview() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {items.map(t => (
-          <div key={t._id} className="card-hover bg-card border border-border rounded-2xl p-5 flex flex-col gap-3 hover:border-green/30">
+          <motion.div
+            key={t._id}
+            className="bg-card border border-border rounded-2xl p-5 flex flex-col gap-3"
+            whileHover={{ y: -3, borderColor: "rgba(29,185,84,0.3)", boxShadow: "0 12px 40px rgba(29,185,84,0.10)", transition: { duration: 0.2 } }}
+            whileTap={{ scale: 0.98 }}
+          >
             <p className="text-text text-sm leading-relaxed flex-1">
               <span className="text-green text-xl font-black mr-1">&ldquo;</span>
               {t.quote}
@@ -331,7 +346,7 @@ function TestimonialsPreview() {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -341,10 +356,17 @@ function TestimonialsPreview() {
 function ProjectCard({ project: p, onPlay, index }: { project: Project; onPlay?: (p: Project) => void; index: number }) {
   return (
     <motion.div
-      className="group relative bg-card border border-border rounded-2xl overflow-hidden cursor-pointer card-hover hover:border-green/35"
+      className="group relative bg-card border border-border rounded-2xl overflow-hidden cursor-pointer"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: index * 0.05 }}
+      whileHover={{
+        y: -4,
+        borderColor: "rgba(29,185,84,0.4)",
+        boxShadow: "0 20px 60px rgba(29,185,84,0.12)",
+        transition: { duration: 0.2 },
+      }}
+      whileTap={{ scale: 0.98 }}
     >
       <Link href={`/projects/${p.slug}`} onClick={() => onPlay?.(p)}>
         {/* Banner */}

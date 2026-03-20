@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Home, Folder, Trophy, Award, Briefcase,
   Cpu, User, Mail, ChevronRight, Search, BookOpen, Quote, Compass,
@@ -65,13 +66,15 @@ export default function Sidebar({ active }: { active?: string }) {
         {NAV.map(({ href, icon: Icon, label }) => {
           const isActive = pathname.startsWith(href) || active === label.toLowerCase();
           return (
-            <Link key={href} href={href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group
-                ${isActive ? "bg-green/10 text-green border-l-2 border-green pl-[10px]" : "text-muted hover:text-text hover:bg-white/5"}`}>
-              <Icon size={16} className={isActive ? "text-green" : "text-dim group-hover:text-muted"} />
-              {label}
-              {isActive && <ChevronRight size={12} className="ml-auto text-green/60" />}
-            </Link>
+            <motion.div key={href} whileHover={{ x: 2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }}>
+              <Link href={href}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group
+                  ${isActive ? "bg-green/10 text-green border-l-2 border-green pl-[10px]" : "text-muted hover:text-text hover:bg-white/5"}`}>
+                <Icon size={16} className={isActive ? "text-green" : "text-dim group-hover:text-muted"} />
+                {label}
+                {isActive && <ChevronRight size={12} className="ml-auto text-green/60" />}
+              </Link>
+            </motion.div>
           );
         })}
       </nav>

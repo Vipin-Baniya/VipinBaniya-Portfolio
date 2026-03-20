@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         bg:      '#000000',
         surface: '#121212',
-        card:    '#181818',
+        card:    '#1A1A1A',
         border:  '#282828',
         text:    '#FFFFFF',
         muted:   '#B3B3B3',
