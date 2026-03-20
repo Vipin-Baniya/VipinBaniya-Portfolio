@@ -28,7 +28,7 @@ export default function SpotifyLayout({
         <MobileLayout active={active} />
 
         {/* Main content */}
-        <main className="flex-1 overflow-y-auto bg-[#181818]">
+        <main className="flex-1 overflow-y-auto bg-surface">
           <div className="pt-[52px] md:pt-0 pb-4 md:pb-8 p-4 md:p-8 max-w-6xl mx-auto">
             {children}
           </div>

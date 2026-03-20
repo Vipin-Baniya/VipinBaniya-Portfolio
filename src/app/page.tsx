@@ -148,7 +148,7 @@ export default function LandingPage() {
         {/* Typing animation tagline */}
         <motion.div
           {...fadeUp(0.2)}
-          className="text-muted text-base leading-relaxed mb-4 max-w-md mx-auto min-h-[2rem] flex items-center justify-center"
+          className="text-muted text-base leading-relaxed mb-3 max-w-md mx-auto min-h-[2rem] flex items-center justify-center"
         >
           <span className="font-mono">
             {displayText}
@@ -158,36 +158,50 @@ export default function LandingPage() {
 
         <motion.p
           {...fadeUp(0.3)}
-          className="text-dim/60 text-xs font-mono mb-10 flex items-center justify-center gap-2"
+          className="text-muted/70 text-sm font-semibold mb-10 tracking-wide"
+        >
+          Engineer by degree.{" "}
+          <span className="bg-gradient-to-r from-green to-green/60 bg-clip-text text-transparent">
+            Builder by obsession.
+          </span>
+        </motion.p>
+
+        <motion.div {...fadeUp(0.4)} className="flex gap-3 justify-center flex-wrap">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/home"
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-green text-bg font-mono font-bold text-sm
+                         shadow-[0_0_30px_#1DB95430] hover:shadow-[0_0_50px_#1DB95460] transition-shadow duration-200 relative overflow-hidden"
+            >
+              <span className="relative z-10">&#x25B6; Explore Portfolio</span>
+              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-border text-text font-mono font-semibold text-sm
+                         hover:border-green/40 hover:bg-green/5 transition-all duration-200"
+            >
+              &#x2709; Contact
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        <motion.p
+          {...fadeUp(0.5)}
+          className="mt-8 text-dim/50 text-xs font-mono flex items-center justify-center gap-2"
         >
           Start exploring &mdash; there&apos;s more than what meets the eye.
           <motion.span
-            animate={{ y: [0, 4, 0] }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
           >
             &#x2193;
           </motion.span>
         </motion.p>
 
-        <motion.div {...fadeUp(0.4)} className="flex gap-3 justify-center flex-wrap">
-          <Link
-            href="/home"
-            className="group px-8 py-3.5 rounded-full bg-green text-bg font-mono font-bold text-sm
-                       hover:scale-105 hover:shadow-[0_0_40px_#1DB95450] transition-all duration-200 relative overflow-hidden"
-          >
-            <span className="relative z-10">&#x25B6; Explore Portfolio</span>
-            <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </Link>
-          <Link
-            href="/admin/login"
-            className="px-8 py-3.5 rounded-full border border-border text-text font-mono font-semibold text-sm
-                       hover:border-green/40 hover:bg-green/5 hover:scale-105 transition-all duration-200"
-          >
-            &#x2B21; Admin Login
-          </Link>
-        </motion.div>
-
-        <motion.p {...fadeUp(0.5)} className="mt-10 text-xs text-border font-mono">
+        <motion.p {...fadeUp(0.6)} className="mt-8 text-xs text-border font-mono">
           v1.0.0 &middot; Vipin Baniya - Portfolio
         </motion.p>
       </div>

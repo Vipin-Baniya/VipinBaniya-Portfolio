@@ -7,7 +7,7 @@
 :root {
   --bg:      #000000;
   --surface: #121212;
-  --card:    #181818;
+  --card:    #1A1A1A;
   --border:  #282828;
   --text:    #FFFFFF;
   --muted:   #B3B3B3;
@@ -112,29 +112,30 @@ main { animation: fadeIn 0.18s ease; }
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(29, 185, 84, 0.10);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 50px rgba(29, 185, 84, 0.12);
 }
 
 /* ── Generic card (Spotify-style dark glass) ─────────────────────── */
 .card {
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 16px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(29, 185, 84, 0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 50px rgba(29, 185, 84, 0.18);
 }
 
 /* ── Glass card ──────────────────────────────────────────────────── */
 .glass-card {
-  background: rgba(24, 24, 24, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(26, 26, 26, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 /* ── Glow pulse (interactive elements) ──────────────────────────── */
