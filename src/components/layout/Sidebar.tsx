@@ -82,17 +82,15 @@ export default function Sidebar({ active }: { active?: string }) {
         })}
       </nav>
 
-      <div className="px-3 py-3 border-t border-border space-y-2">
-        <div className="bg-card border border-border rounded-xl px-3 py-2 hover:border-green/30 transition-colors">
-          <p className="font-mono text-[9px] text-dim uppercase tracking-wider mb-1.5">Color Theme</p>
-          <ThemeSwitcher />
+      <div className="px-3 py-3 border-t border-border space-y-1.5">
+        <div className="flex items-center justify-between px-1 mb-1">
+          <p className="font-mono text-[9px] text-dim uppercase tracking-wider">Color Theme</p>
         </div>
-        <div className="bg-card border border-border rounded-xl px-3 py-2 hover:border-green/30 transition-colors">
-          <p className="font-mono text-[9px] text-dim uppercase tracking-wider mb-1.5">Switch OS Theme</p>
+        <ThemeSwitcher />
+        <div className="pt-1 border-t border-border/50">
           <OSThemeSwitcher />
         </div>
-        <p className="font-mono text-[10px] text-dim px-1">Architect: Vipin Baniya</p>
-        <p className="font-mono text-[9px] text-border px-1">vipinbaniya.dev</p>
+        <p className="font-mono text-[9px] text-dim/60 px-1 pt-1">Vipin Baniya · vipinbaniya.dev</p>
       </div>
     </aside>
   );
