@@ -352,7 +352,7 @@ export default function HomeView() {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [certs,        setCerts]        = useState<Certificate[]>([]);
   const [skills,       setSkills]       = useState<Skill[]>([]);
-  const [profile,      setProfile]      = useState<{ resumeUrl?: string } | null>(null);
+  const [profile,      setProfile]      = useState<{ resumeUrl?: string; liveDashboard?: { leetcode?: number; gfgScore?: number; githubCommits?: number } } | null>(null);
   const [mounted,      setMounted]      = useState(false);
   const { setProject } = usePlayer();
 
@@ -512,9 +512,9 @@ export default function HomeView() {
           </span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <LiveStatCard label="LeetCode"      value={300}              suffix="+" color="text-yellow-400" icon="♥" />
-          <LiveStatCard label="GFG Score"     value={1200}             suffix="+" color="text-green"      icon="⚡" />
-          <LiveStatCard label="GitHub Commits" value={500}             suffix="+" color="text-blue-400"   icon="○" />
+          <LiveStatCard label="LeetCode"      value={profile?.liveDashboard?.leetcode      ?? 300}  suffix="+" color="text-yellow-400" icon="♥" />
+          <LiveStatCard label="GFG Score"     value={profile?.liveDashboard?.gfgScore      ?? 1200} suffix="+" color="text-green"      icon="⚡" />
+          <LiveStatCard label="GitHub Commits" value={profile?.liveDashboard?.githubCommits ?? 500}  suffix="+" color="text-blue-400"   icon="○" />
           <LiveStatCard label="Projects Built" value={projects.length} suffix=""  color="text-purple-400" icon="▦" />
         </div>
       </motion.section>
