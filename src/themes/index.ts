@@ -16,7 +16,6 @@ export const OS_THEMES: Record<OS, OSTheme> = {
 };
 
 export const OS_OPTIONS: Array<{ value: string; label: string; emoji: string }> = [
-  { value: "auto",    label: "Auto Detect", emoji: "🔮" },
   { value: "default", label: "Spotify",     emoji: "🎧" },
   { value: "macos",   label: "macOS",       emoji: "🍎" },
   { value: "windows", label: "Windows",     emoji: "🪟" },

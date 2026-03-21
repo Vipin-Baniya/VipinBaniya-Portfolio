@@ -96,14 +96,13 @@ export default function MobileLayout({ active }: { active?: string }) {
             );
           })}
         </nav>
-        <div className="px-6 py-4 border-t border-border space-y-1">
-          <div className="mb-2">
-            <p className="font-mono text-[9px] text-dim uppercase tracking-wider mb-1">Color Theme</p>
-            <ThemeSwitcher />
+        <div className="px-4 py-4 border-t border-border space-y-1.5">
+          <p className="font-mono text-[9px] text-dim uppercase tracking-wider px-1 mb-1">Color Theme</p>
+          <ThemeSwitcher />
+          <div className="pt-1 border-t border-border/50">
+            <OSThemeSwitcher />
           </div>
-          <OSThemeSwitcher />
-          <p className="font-mono text-[10px] text-dim">Architect: Vipin Baniya</p>
-          <p className="font-mono text-[9px] text-border mt-0.5">vipinbaniya.dev</p>
+          <p className="font-mono text-[9px] text-dim/60 px-1 pt-1">Vipin Baniya · vipinbaniya.dev</p>
         </div>
       </div>
     </>

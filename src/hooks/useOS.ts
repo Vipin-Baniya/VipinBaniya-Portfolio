@@ -2,37 +2,27 @@
 import { useEffect, useState, useCallback } from "react";
 
 export type OS = "macos" | "windows" | "linux" | "android" | "ios" | "default";
-export type OSPreference = OS | "auto";
+export type OSPreference = OS;
 
 const STORAGE_KEY = "structify-os-theme";
 const isBrowser   = typeof window !== "undefined";
 
-function detectOS(): OS {
-  if (typeof navigator === "undefined") return "default";
-  const ua = navigator.userAgent;
-  if (/Android/i.test(ua))           return "android";
-  if (/iPhone|iPad|iPod/i.test(ua))  return "ios";
-  if (/Win/i.test(ua))               return "windows";
-  if (/Mac/i.test(ua))               return "macos";
-  if (/Linux/i.test(ua))             return "linux";
-  return "default";
-}
-
 export function useOS() {
   const [os,         setOS]         = useState<OS>("default");
-  const [preference, setPreference] = useState<OSPreference>("auto");
+  const [preference, setPreference] = useState<OSPreference>("default");
 
   useEffect(() => {
-    const stored = isBrowser ? (localStorage.getItem(STORAGE_KEY) as OSPreference | null) : null;
-    const pref: OSPreference = stored ?? "auto";
+    const stored = isBrowser ? (localStorage.getItem(STORAGE_KEY) as string | null) : null;
+    // If stored value is the old "auto" value, fall back to "default"
+    const pref: OSPreference = (stored && stored !== "auto") ? stored as OSPreference : "default";
     setPreference(pref);
-    setOS(pref === "auto" ? detectOS() : (pref as OS));
+    setOS(pref);
   }, []);
 
   const setOSPreference = useCallback((value: OSPreference) => {
     setPreference(value);
     localStorage.setItem(STORAGE_KEY, value);
-    setOS(value === "auto" ? detectOS() : (value as OS));
+    setOS(value);
   }, []);
 
   return { os, preference, setOSPreference };

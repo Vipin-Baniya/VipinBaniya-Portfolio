@@ -376,10 +376,12 @@ export default function HomeView() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* HERO                                                           */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className={`relative transition-opacity duration-500 ${mounted ? "opacity-100" : "opacity-0"}`}>
+      <section
+        className={`relative overflow-hidden min-h-[320px] transition-opacity duration-500 ${mounted ? "opacity-100" : "opacity-0"}`}
+      >
         {/* Glow orbs */}
-        <div className="absolute -top-16 -left-16 w-80 h-80 rounded-full bg-green/5 blur-3xl pointer-events-none animate-float" />
-        <div className="absolute -top-8 right-0 w-60 h-60 rounded-full bg-green/[0.03] blur-3xl pointer-events-none animate-float" style={{ animationDelay: "3s" }} />
+        <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-green/5 blur-3xl pointer-events-none animate-float" />
+        <div className="absolute top-0 right-0 w-60 h-60 rounded-full bg-green/[0.03] blur-3xl pointer-events-none animate-float" style={{ animationDelay: "3s" }} />
 
         {/* Status badge */}
         <motion.div {...fadeUp(0)} className="mb-5 flex items-center gap-2">
@@ -401,7 +403,7 @@ export default function HomeView() {
         </motion.h1>
 
         {/* Typing role */}
-        <motion.p {...fadeUp(0.12)} className="font-display text-2xl md:text-3xl font-bold text-muted mb-6">
+        <motion.p {...fadeUp(0.12)} className="font-display text-2xl md:text-3xl font-bold text-muted mb-6 min-h-[2.25rem] md:min-h-[2.75rem]">
           <TypingRole />
         </motion.p>
 
