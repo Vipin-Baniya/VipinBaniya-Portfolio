@@ -22,6 +22,11 @@ const ProfileSchema = new Schema(
         color: { type: String },   // hex e.g. "#EAEAEA"
       },
     ],
+    liveDashboard: {
+      leetcode:      { type: Number, default: 0 },
+      gfgScore:      { type: Number, default: 0 },
+      githubCommits: { type: Number, default: 0 },
+    },
   },
   { timestamps: true }
 );

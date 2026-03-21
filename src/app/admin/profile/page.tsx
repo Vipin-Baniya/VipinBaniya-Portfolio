@@ -5,6 +5,7 @@ import { Field, Input, Textarea, FormActions } from "@/components/admin/FormFiel
 
 interface PhilosophyEntry { title: string; description: string; }
 interface ContactLink     { label: string; href: string; icon: string; color: string; }
+interface LiveDashboard   { leetcode: number; gfgScore: number; githubCommits: number; }
 interface ProfileData {
   name: string;
   tagline: string;
@@ -13,11 +14,13 @@ interface ProfileData {
   resumeUrl: string;
   philosophy: PhilosophyEntry[];
   links: ContactLink[];
+  liveDashboard: LiveDashboard;
 }
 
 const DEFAULT_PROFILE: ProfileData = {
   name: "", tagline: "", bio: "", avatarUrl: "", resumeUrl: "",
   philosophy: [], links: [],
+  liveDashboard: { leetcode: 0, gfgScore: 0, githubCommits: 0 },
 };
 
 export default function AdminProfilePage() {
@@ -30,7 +33,15 @@ export default function AdminProfilePage() {
   useEffect(() => {
     fetch("/api/profile")
       .then(r => r.json())
-      .then(d => { if (d && !d.error) setData(d); })
+      .then(d => {
+        if (d && !d.error) {
+          setData({
+            ...DEFAULT_PROFILE,
+            ...d,
+            liveDashboard: { ...DEFAULT_PROFILE.liveDashboard, ...(d.liveDashboard ?? {}) },
+          });
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -75,6 +86,13 @@ export default function AdminProfilePage() {
   }
   function removeLink(i: number) {
     setData(d => ({ ...d, links: d.links.filter((_, idx) => idx !== i) }));
+  }
+
+  // ── Live Dashboard helpers ───────────────────────────────────────
+  function setDashboard(key: keyof LiveDashboard, val: string) {
+    const num = parseInt(val, 10);
+    if (isNaN(num)) return;
+    setData(d => ({ ...d, liveDashboard: { ...d.liveDashboard, [key]: num } }));
   }
 
   async function handleResumeUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -265,6 +283,40 @@ export default function AdminProfilePage() {
               </button>
             </div>
           ))}
+        </section>
+
+        {/* ── Live Dashboard ────────────────────────────────────── */}
+        <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+          <div>
+            <p className="font-mono text-[10px] text-muted">{"// LIVE · DASHBOARD"}</p>
+            <p className="text-[10px] text-dim mt-1">Numbers shown in the live stats section on the home page.</p>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <Field label="LeetCode Score">
+              <input
+                type="number" min={0}
+                value={data.liveDashboard.leetcode}
+                onChange={e => setDashboard("leetcode", e.target.value)}
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text outline-none focus:border-green/40 transition-colors"
+              />
+            </Field>
+            <Field label="GFG Score">
+              <input
+                type="number" min={0}
+                value={data.liveDashboard.gfgScore}
+                onChange={e => setDashboard("gfgScore", e.target.value)}
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text outline-none focus:border-green/40 transition-colors"
+              />
+            </Field>
+            <Field label="GitHub Commits">
+              <input
+                type="number" min={0}
+                value={data.liveDashboard.githubCommits}
+                onChange={e => setDashboard("githubCommits", e.target.value)}
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text outline-none focus:border-green/40 transition-colors"
+              />
+            </Field>
+          </div>
         </section>
 
         <FormActions loading={loading} submitLabel={saved ? "✓ Saved" : "Save Profile"} />

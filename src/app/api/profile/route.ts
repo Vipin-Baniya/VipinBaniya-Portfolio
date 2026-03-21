@@ -21,6 +21,7 @@ const DEFAULTS = {
     { label: "LeetCode", icon: "◈", href: "https://leetcode.com/vipinbaniya",    color: "#F59E0B" },
     { label: "Email",    icon: "◌", href: "mailto:vipin@example.com",             color: "#1DB954" },
   ],
+  liveDashboard: { leetcode: 300, gfgScore: 1200, githubCommits: 500 },
 };
 
 export async function GET() {
